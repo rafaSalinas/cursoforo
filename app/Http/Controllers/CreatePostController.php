@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 
 class CreatePostController extends Controller
@@ -11,8 +12,11 @@ class CreatePostController extends Controller
         return view('posts.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $post = new Post($request->all());
 
+        auth()->user()->posts()->save($post);
+        return $post->title;
     }
 }

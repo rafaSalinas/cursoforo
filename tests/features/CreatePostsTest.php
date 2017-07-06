@@ -8,7 +8,7 @@ class CreatePostsTest extends FeatureTestCase
         $title = 'Esta es una pregunta';
         $content = 'Este es el contenido';
         //Dexcribimos los pasos a realizar, ir a ruta ,grabar datos en base de datos segun tipo, y pulsar publicar
-        $this->actingAs($this->defaultUser());
+        $this->actingAs($user = $this->defaultUser());
         
         $this->visit(route('posts.create'))
             ->type($title, 'title')
@@ -20,9 +20,10 @@ class CreatePostsTest extends FeatureTestCase
            'title' =>  $title,
             'content' => $content,
             'pending' => true,
+            'user_id' => $user->id,
         ]);
 
         //Comprobamos que se redirige bien a la salida, y en elemento h1 vemos la frase
-        $this->seeInElement('h1', $title);
+        $this->see($title);
     }
 }
